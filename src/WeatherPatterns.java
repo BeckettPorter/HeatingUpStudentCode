@@ -32,10 +32,7 @@ public class WeatherPatterns
                 // If the given temp is greater than the highest temp (the last temp) in a given run, add it to the run.
                 if (temperatures[i] > runs[j].getLast())
                 {
-                    // copy, fix this
-                    ArrayList<Integer> copy = new ArrayList<>();
-
-                    copy.addAll(runs[j]);
+                    ArrayList<Integer> copy = new ArrayList<>(runs[j]);
 
                     copy.add(temperatures[i]);
 
