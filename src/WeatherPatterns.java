@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class WeatherPatterns
 {
     private static ArrayList<Integer>[] adjacencyLists;
+    private static int[] longestPaths;
     /**
      * Longest Warming Trend
      * @param temperatures
@@ -18,9 +19,8 @@ public class WeatherPatterns
      */
     public static int longestWarmingTrend(int[] temperatures)
     {
-        // Do I actually need to store this as an arraylist or could it just be a single int
-        // with the highest temp for that run?
         adjacencyLists = new ArrayList[temperatures.length];
+        longestPaths = new int[temperatures.length];
 
         for (int i = 0; i < adjacencyLists.length; i++)
         {
@@ -52,14 +52,29 @@ public class WeatherPatterns
         return currentMaxFound;
     }
 
-
     private static int findLongestPathTo(ArrayList<Integer> ar)
     {
         int length = 0;
+        // What do I return if it is empty ?
+        if (ar.isEmpty())
+        {
+            return length;
+        }
 
         for (int i = 0; i < ar.size(); i++)
         {
-            length = Math.max(ar.get(i), findLongestPathTo(adjacencyLists[i]));
+            if (longestPaths[i] != 0)
+            {
+                length = Math.max(ar.get(i), longestPaths[i]);
+            }
+            else
+            {
+                int n = findLongestPathTo(adjacencyLists[i]);
+
+                length = Math.max(ar.get(i), n);
+
+                longestPaths[i] = n;
+            }
         }
         return 1 + length;
     }
